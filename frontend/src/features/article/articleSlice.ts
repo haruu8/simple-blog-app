@@ -103,7 +103,7 @@ export const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
-    editArticle(state, action: PayloadAction<POST_ARTICLE>) {
+    editArticle(state, action: PayloadAction<POST_ARTICLE[]>) {
       state.editedArticle = action.payload;
     },
     selectTask(state, action: PayloadAction<READ_ARTICLE[]>) {

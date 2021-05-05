@@ -17,8 +17,8 @@ export interface POST_ARTICLE {
 
 export interface ARTICLE_STATE {
   articles: READ_ARTICLE[],
-  editedArticle: POST_ARTICLE,
-  selectedArticle: READ_ARTICLE,
+  editedArticle: POST_ARTICLE[],
+  selectedArticle: READ_ARTICLE[],
 }
 
 
