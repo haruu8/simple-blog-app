@@ -26,11 +26,12 @@ export const fetchAsyncCreateArticle = createAsyncThunk(
     const res = await axios.post<READ_ARTICLE>(
       `${ process.env.REACT_APP_API_URL }article/`,
       article,
-      // {
-      //   headers: {
-      //     Authorization: `JWT ${ localStorage.localJWT }`,
-      //   },
-      // }
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `JWT ${ localStorage.localJWT }`,
+        },
+      }
     );
     return res.data;
   }
@@ -103,10 +104,10 @@ export const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
-    editArticle(state, action: PayloadAction<POST_ARTICLE[]>) {
+    editArticle(state, action: PayloadAction<POST_ARTICLE>) {
       state.editedArticle = action.payload;
     },
-    selectTask(state, action: PayloadAction<READ_ARTICLE[]>) {
+    selectArticle(state, action: PayloadAction<READ_ARTICLE>) {
       state.selectedArticle = action.payload;
     },
   },
