@@ -77,6 +77,8 @@ export const initialState: ARTICLE_STATE = {
       id: 0,
       title: '',
       body_text: '',
+      status: '',
+      status_name: '',
       created_at: '',
       updated_at: '',
     },
@@ -85,11 +87,14 @@ export const initialState: ARTICLE_STATE = {
     id: 0,
     title: '',
     body_text: '',
+    status: '',
   },
   selectedArticle:  {
     id: 0,
     title: '',
     body_text: '',
+    status: '',
+    status_name: '',
     created_at: '',
     updated_at: '',
   }
