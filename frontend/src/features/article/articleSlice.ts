@@ -81,22 +81,18 @@ export const initialState: ARTICLE_STATE = {
       updated_at: '',
     },
   ],
-  editedArticle: [
-    {
-      id: 0,
-      title: '',
-      body_text: '',
-    },
-  ],
-  selectedArticle: [
-    {
-      id: 0,
-      title: '',
-      body_text: '',
-      created_at: '',
-      updated_at: '',
-    },
-  ],
+  editedArticle:  {
+    id: 0,
+    title: '',
+    body_text: '',
+  },
+  selectedArticle:  {
+    id: 0,
+    title: '',
+    body_text: '',
+    created_at: '',
+    updated_at: '',
+  }
 };
 
 

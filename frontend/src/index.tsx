@@ -13,7 +13,7 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Route exact path="/" component={ArticleDisplay} />
-        <Route exact path="/tasks" component={App} />
+        <Route exact path="/articles" component={App} />
       </div>
     </BrowserRouter>
   </Provider>,
