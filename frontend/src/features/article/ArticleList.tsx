@@ -74,7 +74,7 @@ const ArticleList: React.FC = () => {
 
   const renderSwitch = (statusName: string) => {
     switch (statusName) {
-      case 'Not Started':
+      case 'Not started':
         return (
           <Badge variant='dot' color='error'>
             {statusName}
@@ -111,7 +111,7 @@ const ArticleList: React.FC = () => {
               id: 0,
               title: '',
               body_text: '',
-              status: '',
+              status: '1',
             })
           );
           dispatch(selectArticle(initialState.selectedArticle));

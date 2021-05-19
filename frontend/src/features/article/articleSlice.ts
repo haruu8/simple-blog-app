@@ -125,8 +125,7 @@ export const articleSlice = createSlice({
     builder.addCase(
       fetchAsyncGetArticles.rejected,
       () => {
-        alert('エラーが発生しています');
-        // window.location.href = '/';
+        window.location.href = '/';
       }
     );
     builder.addCase(
@@ -142,7 +141,8 @@ export const articleSlice = createSlice({
     builder.addCase(
       fetchAsyncCreateArticle.rejected,
       () => {
-        window.location.href = '/';
+        alert('エラーが発生');
+        // window.location.href = '/';
       }
     );
     builder.addCase(

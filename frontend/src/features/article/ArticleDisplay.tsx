@@ -14,6 +14,7 @@ const ArticleDisplay: React.FC = () => {
   const rows = [
     { item: 'Title', data: selectedArticle.title },
     { item: 'BodyText', data: selectedArticle.body_text },
+    { item: "Status", data: selectedArticle.status_name },
     { item: 'Created', data: selectedArticle.created_at },
     { item: 'Updated', data: selectedArticle.updated_at },
   ];

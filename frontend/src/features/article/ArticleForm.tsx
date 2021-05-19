@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
   TextField,
   InputLabel,
@@ -25,24 +26,80 @@ import { AppDispatch } from '../../app/store';
 import { initialState } from '../article/articleSlice';
 
 
+const useStyles = makeStyles((theme: Theme) => ({
+  field: {
+    margin: theme.spacing(2),
+    minWidth: 240,
+  },
+  button: {
+    margin: theme.spacing(3),
+  },
+  addIcon: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(2),
+  },
+  saveModal: {
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(2),
+  },
+  paper: {
+    position: "absolute",
+    textAlign: "center",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+
 const ArticleForm: React.FC = () => {
+  const classes = useStyles();
   const dispatch: AppDispatch = useDispatch();
+
   const editedArticle = useSelector(selectEditedArticle);
+
   const [open, setOpen] = useState(false);
+  const [modalStyle] = useState(getModalStyle);
   const [inputText, setInputText] = useState('');
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   }
+
   const isDisabled =
-    editedArticle.title.length === 0;
+    editedArticle.title.length === 0 ||
+    editedArticle.body_text.length === 0;
+
+  // const isCatDisabled = inputText.length === 0;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value: string | number = e.target.value;
     const name = e.target.name;
-    // status って何？
     dispatch(editArticle({ ...editedArticle, [name]: value }));
+
+  }
+  const handleSelectStatusChange = (
+  e: React.ChangeEvent<{value: unknown}>
+  ) => {
+    const value = e.target.value as string;
+    dispatch(editArticle({ ...editedArticle, status: value }));
   }
 
   return (
@@ -50,30 +107,58 @@ const ArticleForm: React.FC = () => {
       <h2>{editedArticle.id ? "Update Article" : "New Article"}</h2>
       <form>
         <TextField
+          className={classes.field}
           label='title'
           name='title'
           value={editedArticle.title}
           onChange={handleInputChange}
         />
         <TextField
+          className={classes.field}
           label='body_text'
           name='body_text'
           value={editedArticle.body_text}
           onChange={handleInputChange}
         />
-        <br/>
+        <br />
+        <FormControl className={classes.field}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            name='status'
+            value={editedArticle.status}
+            onChange={handleSelectStatusChange}
+          >
+            <MenuItem value={1}>Not started</MenuItem>
+            <MenuItem value={2}>On going</MenuItem>
+            <MenuItem value={3}>Done</MenuItem>
+          </Select>
+        </FormControl>
         <Fab
           size="small"
           color="primary"
           onClick={handleOpen}
+          className={classes.addIcon}
         >
           <AddIcon />
         </Fab>
+        <br />
+
+        {/* <Modal open={open} onClose={handleClose}>
+          <div style={modalStyle} className={classes.paper}>
+            <TextField
+              className={classes.field}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
+        </Modal> */}
         <br />
         <Button
           variant="contained"
           color="primary"
           size="small"
+          className={classes.button}
           startIcon={<SaveIcon />}
           disabled={isDisabled}
           onClick={
