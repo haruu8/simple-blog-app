@@ -5,13 +5,15 @@ import { store } from './app/store';
 import App from "./App";
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter } from "react-router-dom";
+import Support from './features/support/Support';
 
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Support} />
+        <Route exact path="/articles" component={App} />
       </div>
     </BrowserRouter>
   </Provider>,

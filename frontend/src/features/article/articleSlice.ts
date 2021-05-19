@@ -125,7 +125,8 @@ export const articleSlice = createSlice({
     builder.addCase(
       fetchAsyncGetArticles.rejected,
       () => {
-        window.location.href = '/';
+        alert('エラーが発生しています');
+        // window.location.href = '/';
       }
     );
     builder.addCase(
