@@ -21,9 +21,9 @@ import {
   selectEditedArticle,
   editArticle,
   selectArticle
-} from '../article/articleSlice';
+} from './articleSlice';
 import { AppDispatch } from '../../app/store';
-import { initialState } from '../article/articleSlice';
+import { initialState } from './articleSlice';
 
 
 const useStyles = makeStyles((theme: Theme) => ({

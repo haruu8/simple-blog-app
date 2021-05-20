@@ -5,7 +5,7 @@ import { store } from './app/store';
 import App from "./App";
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter } from "react-router-dom";
-import Support from './features/support/Support';
+import Support from './components/support/Support';
 
 
 ReactDOM.render(

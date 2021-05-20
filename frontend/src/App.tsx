@@ -13,10 +13,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchAsyncGetArticles,
   selectEditedArticle,
-} from "./features/article/articleSlice";
-import ArticleList from './features/article/ArticleList';
-import ArticleForm from './features/article/ArticleForm';
-import ArticleDisplay from './features/article/ArticleDisplay';
+} from "./components/article/articleSlice";
+import ArticleList from './components/article/ArticleList';
+import ArticleForm from './components/article/ArticleForm';
+import ArticleDisplay from './components/article/ArticleDisplay';
 import { AppDispatch } from './app/store';
 
 

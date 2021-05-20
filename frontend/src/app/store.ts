@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import articleReducer from '../features/article/articleSlice';
+import articleReducer from '../components/article/articleSlice';
 // import commentReducer from '../features/comment/commentSlice';
 
 
