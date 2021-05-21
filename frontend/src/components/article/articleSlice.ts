@@ -1,11 +1,34 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import axios from 'axios';
-import { READ_ARTICLE, POST_ARTICLE, ARTICLE_STATE } from '../types';
+import { READ_ARTICLE, POST_ARTICLE, ARTICLE_STATE, CATEGORY } from '../types';
+
+
+export const fetchAsyncGetCategories = createAsyncThunk(
+  'article/getCategories',
+  async () => {
+    const res = await axios.get<CATEGORY[]>(
+      `${ process.env.REACT_APP_API_URL }category/`,
+    );
+    return res.data;
+  }
+);
+
+
+export const fetchAsyncCreateCategory = createAsyncThunk(
+  'article/createCategory',
+  async (item: string) => {
+    const res = await axios.post<CATEGORY>(
+      `${ process.env.REACT_APP_API_URL }category/`,
+      {item: item},
+    );
+    return res.data;
+  }
+);
 
 
 export const fetchAsyncGetArticles = createAsyncThunk(
-  'article/getArticle',
+  'article/getArticles',
   async () => {
     const res = await axios.get<READ_ARTICLE[]>(
       `${ process.env.REACT_APP_API_URL }article/`,
@@ -79,6 +102,8 @@ export const initialState: ARTICLE_STATE = {
       body_text: '',
       status: '',
       status_name: '',
+      category: 1,
+      category_item: '',
       created_at: '',
       updated_at: '',
     },
@@ -88,6 +113,7 @@ export const initialState: ARTICLE_STATE = {
     title: '',
     body_text: '',
     status: '',
+    category: 1,
   },
   selectedArticle:  {
     id: 0,
@@ -95,9 +121,17 @@ export const initialState: ARTICLE_STATE = {
     body_text: '',
     status: '',
     status_name: '',
+    category: 1,
+    category_item: '',
     created_at: '',
     updated_at: '',
-  }
+  },
+  category: [
+    {
+      id: 0,
+      item: '',
+    },
+  ],
 };
 
 
@@ -113,6 +147,37 @@ export const articleSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(
+      fetchAsyncGetCategories.fulfilled,
+      (state, action: PayloadAction<CATEGORY[]>) => {
+        return {
+          ...state,
+          categories: action.payload,
+        };
+      }
+    );
+    builder.addCase(
+      fetchAsyncGetCategories.rejected,
+      () => {
+        window.location.href = '/';
+      }
+    );
+    builder.addCase(
+      fetchAsyncCreateCategory.fulfilled,
+      (state, action: PayloadAction<CATEGORY>) => {
+        return {
+          ...state,
+          categories: [action.payload, ...state.category],
+          editedArticle: initialState.editedArticle,
+        };
+      }
+    );
+    builder.addCase(
+      fetchAsyncCreateCategory.rejected,
+      () => {
+        window.location.href = '/';
+      }
+    );
     builder.addCase(
       fetchAsyncGetArticles.fulfilled,
       (state, action: PayloadAction<READ_ARTICLE[]>) => {
@@ -141,8 +206,7 @@ export const articleSlice = createSlice({
     builder.addCase(
       fetchAsyncCreateArticle.rejected,
       () => {
-        alert('エラーが発生');
-        // window.location.href = '/';
+        window.location.href = '/';
       }
     );
     builder.addCase(
@@ -188,4 +252,5 @@ export const { editArticle, selectArticle } = articleSlice.actions;
 export const selectSelectedArticle = (state: RootState) => state.article.selectedArticle;
 export const selectEditedArticle = (state: RootState) => state.article.editedArticle;
 export const selectArticles = (state: RootState) => state.article.articles;
+export const selectCategories = (state: RootState) => state.article.category;
 export default articleSlice.reducer;

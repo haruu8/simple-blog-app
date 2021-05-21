@@ -20,7 +20,9 @@ import {
   fetchAsyncDeleteArticle,
   selectEditedArticle,
   editArticle,
-  selectArticle
+  selectArticle,
+  selectCategories,
+  fetchAsyncCreateCategory,
 } from './articleSlice';
 import { AppDispatch } from '../../app/store';
 import { initialState } from './articleSlice';
@@ -69,6 +71,7 @@ const ArticleForm: React.FC = () => {
   const classes = useStyles();
   const dispatch: AppDispatch = useDispatch();
 
+  const categories = useSelector(selectCategories);
   const editedArticle = useSelector(selectEditedArticle);
 
   const [open, setOpen] = useState(false);
@@ -87,7 +90,13 @@ const ArticleForm: React.FC = () => {
     editedArticle.title.length === 0 ||
     editedArticle.body_text.length === 0;
 
-  // const isCatDisabled = inputText.length === 0;
+  const isCatDisabled = inputText.length === 0;
+
+  const handleInputTextChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputText(e.target.value);
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value: string | number = e.target.value;
@@ -101,6 +110,18 @@ const ArticleForm: React.FC = () => {
     const value = e.target.value as string;
     dispatch(editArticle({ ...editedArticle, status: value }));
   }
+
+  const handleSelectCatChange = (
+    e: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const value = e.target.value as number;
+    dispatch(editArticle({ ...editedArticle, category: value }));
+  };
+  let catOptions = categories.map((cat) => (
+    <MenuItem key={cat.id} value={cat.id}>
+      {cat.item}
+    </MenuItem>
+  ));
 
   return (
     <div>
@@ -133,6 +154,17 @@ const ArticleForm: React.FC = () => {
             <MenuItem value={3}>Done</MenuItem>
           </Select>
         </FormControl>
+        <br />
+        <FormControl className={classes.field}>
+          <InputLabel>Category</InputLabel>
+          <Select
+            name='category'
+            value={editedArticle.category}
+            onChange={handleSelectCatChange}
+          >
+            {catOptions}
+          </Select>
+        </FormControl>
         <Fab
           size="small"
           color="primary"
@@ -143,16 +175,34 @@ const ArticleForm: React.FC = () => {
         </Fab>
         <br />
 
-        {/* <Modal open={open} onClose={handleClose}>
+        <Modal open={open} onClose={handleClose}>
           <div style={modalStyle} className={classes.paper}>
             <TextField
               className={classes.field}
               InputLabelProps={{
                 shrink: true,
               }}
+              label='New Category'
+              type='text'
+              value={inputText}
+              onChange={handleInputTextChange}
             />
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              className={classes.saveModal}
+              startIcon={<SaveIcon />}
+              disabled={isCatDisabled}
+              onClick={() => {
+                dispatch(fetchAsyncCreateCategory(inputText));
+                handleClose();
+              }}
+            >
+              Save
+            </Button>
           </div>
-        </Modal> */}
+        </Modal>
         <br />
         <Button
           variant="contained"

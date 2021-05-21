@@ -112,6 +112,7 @@ const ArticleList: React.FC = () => {
               title: '',
               body_text: '',
               status: '1',
+              category: 1,
             })
           );
           dispatch(selectArticle(initialState.selectedArticle));
@@ -128,18 +129,19 @@ const ArticleList: React.FC = () => {
             <TableRow>
               {columns.map(
                 (column, colIndex) =>
-                (column === 'title' ||
-                  column === 'status') && (
-                  <TableCell align='center' key={colIndex}>
-                    <TableSortLabel
-                      active={state.activeKey === column}
-                      direction={state.order}
-                      onClick={() => handleClickSortColumn(column)}
-                    >
-                      <strong>{column}</strong>
-                    </TableSortLabel>
-                  </TableCell>
-                )
+                  (column === 'title' ||
+                    column === "category" ||
+                    column === 'status') && (
+                    <TableCell align='center' key={colIndex}>
+                      <TableSortLabel
+                        active={state.activeKey === column}
+                        direction={state.order}
+                        onClick={() => handleClickSortColumn(column)}
+                      >
+                        <strong>{column}</strong>
+                      </TableSortLabel>
+                    </TableCell>
+                  )
               )}
               <TableCell></TableCell>
             </TableRow>
@@ -149,7 +151,8 @@ const ArticleList: React.FC = () => {
               <TableRow hover key={rowIndex}>
                 {Object.keys(row).map(
                   (key, colIndex) =>
-                  (key === 'title' ||
+                    (key === 'title' ||
+                      key === 'category_item' ||
                       key === 'status_name') && (
                       <TableCell
                         align='center'
@@ -160,7 +163,8 @@ const ArticleList: React.FC = () => {
                           dispatch(editArticle(initialState.editedArticle));
                         }}
                       >
-                        {key === 'status_name' ? (
+                        {key === 'status_name' ||
+                          key === 'category_item' ? (
                           renderSwitch(row[key])
                         ) : (
                           <span>{row[key]}</span>
