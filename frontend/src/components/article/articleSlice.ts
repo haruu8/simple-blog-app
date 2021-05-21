@@ -102,7 +102,7 @@ export const initialState: ARTICLE_STATE = {
       body_text: '',
       status: '',
       status_name: '',
-      category: 1,
+      category: 0,
       category_item: '',
       created_at: '',
       updated_at: '',
@@ -113,7 +113,7 @@ export const initialState: ARTICLE_STATE = {
     title: '',
     body_text: '',
     status: '',
-    category: 1,
+    category: 0,
   },
   selectedArticle:  {
     id: 0,
@@ -121,7 +121,7 @@ export const initialState: ARTICLE_STATE = {
     body_text: '',
     status: '',
     status_name: '',
-    category: 1,
+    category: 0,
     category_item: '',
     created_at: '',
     updated_at: '',
@@ -167,7 +167,7 @@ export const articleSlice = createSlice({
       (state, action: PayloadAction<CATEGORY>) => {
         return {
           ...state,
-          categories: [action.payload, ...state.category],
+          categories: [...state.category, action.payload],
           editedArticle: initialState.editedArticle,
         };
       }

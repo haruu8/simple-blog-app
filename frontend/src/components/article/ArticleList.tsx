@@ -163,8 +163,7 @@ const ArticleList: React.FC = () => {
                           dispatch(editArticle(initialState.editedArticle));
                         }}
                       >
-                        {key === 'status_name' ||
-                          key === 'category_item' ? (
+                        {key === 'status_name' ? (
                           renderSwitch(row[key])
                         ) : (
                           <span>{row[key]}</span>
