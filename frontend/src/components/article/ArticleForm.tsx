@@ -21,7 +21,7 @@ import {
   selectEditedArticle,
   editArticle,
   selectArticle,
-  selectCategories,
+  selectCategory,
   fetchAsyncCreateCategory,
 } from './articleSlice';
 import { AppDispatch } from '../../app/store';
@@ -71,7 +71,7 @@ const ArticleForm: React.FC = () => {
   const classes = useStyles();
   const dispatch: AppDispatch = useDispatch();
 
-  const categories = useSelector(selectCategories);
+  const category = useSelector(selectCategory);
   const editedArticle = useSelector(selectEditedArticle);
 
   const [open, setOpen] = useState(false);
@@ -117,7 +117,7 @@ const ArticleForm: React.FC = () => {
     const value = e.target.value as number;
     dispatch(editArticle({ ...editedArticle, category: value }));
   };
-  let catOptions = categories.map((cat) => (
+  let catOptions = category.map((cat) => (
     <MenuItem key={cat.id} value={cat.id}>
       {cat.item}
     </MenuItem>

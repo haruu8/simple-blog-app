@@ -4,8 +4,8 @@ import axios from 'axios';
 import { READ_ARTICLE, POST_ARTICLE, ARTICLE_STATE, CATEGORY } from '../types';
 
 
-export const fetchAsyncGetCategories = createAsyncThunk(
-  'article/getCategories',
+export const fetchAsyncGetCategory = createAsyncThunk(
+  'article/getCategory',
   async () => {
     const res = await axios.get<CATEGORY[]>(
       `${ process.env.REACT_APP_API_URL }category/`,
@@ -148,16 +148,16 @@ export const articleSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchAsyncGetCategories.fulfilled,
+      fetchAsyncGetCategory.fulfilled,
       (state, action: PayloadAction<CATEGORY[]>) => {
         return {
           ...state,
-          categories: action.payload,
+          category: action.payload,
         };
       }
     );
     builder.addCase(
-      fetchAsyncGetCategories.rejected,
+      fetchAsyncGetCategory.rejected,
       () => {
         window.location.href = '/';
       }
@@ -167,7 +167,7 @@ export const articleSlice = createSlice({
       (state, action: PayloadAction<CATEGORY>) => {
         return {
           ...state,
-          categories: [...state.category, action.payload],
+          category: [...state.category, action.payload],
           editedArticle: initialState.editedArticle,
         };
       }
@@ -252,5 +252,5 @@ export const { editArticle, selectArticle } = articleSlice.actions;
 export const selectSelectedArticle = (state: RootState) => state.article.selectedArticle;
 export const selectEditedArticle = (state: RootState) => state.article.editedArticle;
 export const selectArticles = (state: RootState) => state.article.articles;
-export const selectCategories = (state: RootState) => state.article.category;
+export const selectCategory = (state: RootState) => state.article.category;
 export default articleSlice.reducer;

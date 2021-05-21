@@ -60,7 +60,7 @@ const App: React.FC = () => {
             <PolymerIcon className={classes.icon} />
           </Grid>
           <Grid item xs={4}>
-            <h1>ブログ</h1>
+            <h1>Article</h1>
           </Grid>
           <Grid item xs={4}>
             <div className={styles.app_logout}>
