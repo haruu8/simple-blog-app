@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchAsyncGetArticles,
   selectEditedArticle,
+  fetchAsyncGetCategory,
 } from "./components/article/articleSlice";
 import ArticleList from './components/article/ArticleList';
 import ArticleForm from './components/article/ArticleForm';
@@ -48,6 +49,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchBootLoader = async () => {
       await dispatch(fetchAsyncGetArticles());
+      await dispatch(fetchAsyncGetCategory());
     };
     fetchBootLoader();
   }, [dispatch]);

@@ -9,6 +9,11 @@ export const fetchAsyncGetCategory = createAsyncThunk(
   async () => {
     const res = await axios.get<CATEGORY[]>(
       `${ process.env.REACT_APP_API_URL }category/`,
+      // {
+      //   headers: {
+      //     Autorization: `JWT ${localStorage.localJWT}`,
+      //   },
+      // }
     );
     return res.data;
   }
@@ -20,7 +25,12 @@ export const fetchAsyncCreateCategory = createAsyncThunk(
   async (item: string) => {
     const res = await axios.post<CATEGORY>(
       `${ process.env.REACT_APP_API_URL }category/`,
-      {item: item},
+      { item: item },
+      // {
+      //   headers: {
+      //     Autorization: `JWT ${localStorage.localJWT}`,
+      //   },
+      // }
     );
     return res.data;
   }
