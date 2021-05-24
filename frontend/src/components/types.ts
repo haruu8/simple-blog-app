@@ -1,3 +1,23 @@
+// authSlice.ts
+export interface FILE extends Blob {
+  readonly lastModified: number;
+  readonly name: string;
+}
+
+
+export interface PROFILE {
+  id: number;
+  user_profile: number;
+  img: string | null;
+}
+
+
+export interface POST_PROFILE {
+  id: number;
+  img: File | null;
+}
+
+
 // articleSlice.ts
 export interface READ_ARTICLE {
   id: number,
