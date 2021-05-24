@@ -6,13 +6,15 @@ import App from "./App";
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter } from "react-router-dom";
 import Support from './components/support/Support';
+import Auth from './components/auth/Auth';
 
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Route exact path="/" component={Support} />
+        <Route exact path="/" component={Auth} />
+        <Route exact path="/support" component={Support} />
         <Route exact path="/articles" component={App} />
       </div>
     </BrowserRouter>

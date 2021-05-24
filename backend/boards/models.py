@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.fields import related
 
 
 class Category(models.Model):
@@ -8,12 +10,27 @@ class Category(models.Model):
         return self.item
 
 
+def upload_avatar_path(instance, filename):
+    ext = filename.split('.')[-1]
+    return '/'.join(['avatars', str(instance.user_profile.id) + str(".") + str(ext)])
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    img = models.ImageField(blank=True, null=True, upload_to=upload_avatar_path)
+
+    def __str__(self):
+        return self.user_profile.username
+
+
+
 class Article(models.Model):
     STATUS = (
         ('1', 'Not started'),
         ('2', 'On going'),
         ('3', 'Done'),
     )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
     title = models.CharField(max_length=255)
     body_text = models.CharField(max_length=255)
     status = models.CharField(max_length=40, choices=STATUS, default='1')
@@ -26,9 +43,10 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_author')
     article = models.ForeignKey(
         Article,
-        related_name='article',
+        related_name='article_obj',
         on_delete=models.CASCADE
     )
     body_text = models.CharField(max_length=255)

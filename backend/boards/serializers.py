@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Article, Comment, Category
+from .models import Article, Comment, Category, Profile
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -17,6 +17,13 @@ class ArticleSerializer(serializers.ModelSerializer):
     category_item = serializers.ReadOnlyField(source='category.item', read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['id', 'user_profile', 'img']
+        extra_kwargs = {'user_profile': {'read_only': True}}
 
 
 class CommentSerializer(serializers.ModelSerializer):
