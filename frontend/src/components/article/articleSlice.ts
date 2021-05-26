@@ -9,11 +9,11 @@ export const fetchAsyncGetCategory = createAsyncThunk(
   async () => {
     const res = await axios.get<CATEGORY[]>(
       `${ process.env.REACT_APP_API_URL }category/`,
-      // {
-      //   headers: {
-      //     Autorization: `JWT ${localStorage.localJWT}`,
-      //   },
-      // }
+      {
+        headers: {
+          Autorization: `JWT ${localStorage.localJWT}`,
+        },
+      }
     );
     return res.data;
   }
@@ -26,11 +26,11 @@ export const fetchAsyncCreateCategory = createAsyncThunk(
     const res = await axios.post<CATEGORY>(
       `${ process.env.REACT_APP_API_URL }category/`,
       { item: item },
-      // {
-      //   headers: {
-      //     Autorization: `JWT ${localStorage.localJWT}`,
-      //   },
-      // }
+      {
+        headers: {
+          Autorization: `JWT ${localStorage.localJWT}`,
+        },
+      }
     );
     return res.data;
   }
@@ -42,11 +42,11 @@ export const fetchAsyncGetArticles = createAsyncThunk(
   async () => {
     const res = await axios.get<READ_ARTICLE[]>(
       `${ process.env.REACT_APP_API_URL }article/`,
-      // {
-      //   headers: {
-      //     Authorization: `JWT ${ localStorage.localJWT }`,
-      //   },
-      // }
+      {
+        headers: {
+          Authorization: `JWT ${ localStorage.localJWT }`,
+        },
+      }
     );
     return res.data;
   }
@@ -62,7 +62,7 @@ export const fetchAsyncCreateArticle = createAsyncThunk(
       {
         headers: {
           'Content-Type': 'application/json',
-          // Authorization: `JWT ${ localStorage.localJWT }`,
+          Authorization: `JWT ${ localStorage.localJWT }`,
         },
       }
     );
@@ -80,7 +80,7 @@ export const fetchAsyncUpdateArticle = createAsyncThunk(
       {
         headers: {
           'Content-Type': 'application/json',
-          // Authorization: `JWT ${ localStorage.localJWT }`,
+          Authorization: `JWT ${ localStorage.localJWT }`,
         },
       }
     );
@@ -96,7 +96,7 @@ export const fetchAsyncDeleteArticle = createAsyncThunk(
       {
         headers: {
           'Content-Type': 'application/json',
-          // Authorization: `JWT ${ localStorage.localJWT }`,
+          Authorization: `JWT ${ localStorage.localJWT }`,
         }
       });
     return id;
@@ -114,6 +114,8 @@ export const initialState: ARTICLE_STATE = {
       status_name: '',
       category: 0,
       category_item: '',
+      owner: 0,
+      owner_username: '',
       created_at: '',
       updated_at: '',
     },
@@ -133,9 +135,17 @@ export const initialState: ARTICLE_STATE = {
     status_name: '',
     category: 0,
     category_item: '',
+    owner: 0,
+    owner_username: '',
     created_at: '',
     updated_at: '',
   },
+  users: [
+    {
+      id: 0,
+      username: '',
+    },
+  ],
   category: [
     {
       id: 0,

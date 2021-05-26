@@ -1,4 +1,10 @@
 // authSlice.ts
+export interface LOGIN_USER {
+  id: number,
+  username: string,
+}
+
+
 export interface FILE extends Blob {
   readonly lastModified: number;
   readonly name: string;
@@ -8,7 +14,38 @@ export interface FILE extends Blob {
 export interface PROFILE {
   id: number;
   user_profile: number;
-  img: string | null;
+  img: File | null;
+}
+
+
+export interface POST_PROFILE {
+  id: number;
+  img: File | null;
+}
+
+
+export interface CRED {
+  username: string;
+  password: string;
+}
+
+
+export interface JWT {
+  refresh: string;
+  access: string;
+}
+
+
+export interface USER {
+  id: number;
+  username: string;
+}
+
+
+export interface AUTH_STATE {
+  isLoginView: boolean;
+  loginUser: LOGIN_USER;
+  profiles: PROFILE[];
 }
 
 
@@ -27,6 +64,8 @@ export interface READ_ARTICLE {
   status_name: string;
   category: number;
   category_item: string;
+  owner: number;
+  owner_username: string;
   created_at: string,
   updated_at: string,
 }
@@ -50,6 +89,7 @@ export interface ARTICLE_STATE {
   articles: READ_ARTICLE[],
   editedArticle: POST_ARTICLE,
   selectedArticle: READ_ARTICLE,
+  users: USER[];
   category: CATEGORY[],
 }
 
