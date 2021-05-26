@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ
+from datetime import timedelta
+import os
 
 env = environ.Env()
 env.read_env('.env')
@@ -37,8 +39,9 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'rest_framework',
     'boards.apps.BoardsConfig',
-    'social_django',
     'corsheaders',
+    'djoser',
+    # 'social_django',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -83,6 +86,21 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+}
 
 
 # Database

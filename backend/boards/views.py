@@ -1,8 +1,31 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions, generics
 from .models import Article, Comment, Category
-from .serializers import ArticleSerializer, CommentSerializer, CategorySerializer
+from .serializers import ArticleSerializer, CommentSerializer, CategorySerializer, UserSerializer
 from rest_framework.response import Response
+from .permissions import OwnerPermission
+from django.contrib.auth.models import User
+
+
+class CreateUserView(generics.CreateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = (permissions.AllowAny,)
+
+
+class ListUserView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class LoginUserView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        response = {'message': 'PUT method now allowed'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -26,8 +49,8 @@ class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
-    # def perform_create(self, serializer):
-    #     serializer.save()
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
     def partial_update(self, request, *args, **kwargs):
         response = {'message': 'PATCH method is not allowed'}
