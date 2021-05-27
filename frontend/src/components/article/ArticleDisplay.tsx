@@ -16,7 +16,7 @@ const ArticleDisplay: React.FC = () => {
     { item: 'BodyText', data: selectedArticle.body_text },
     { item: "Status", data: selectedArticle.status_name },
     { item: 'Category', data: selectedArticle.category_item },
-    { item: "Owner", data: selectedArticle.owner_username },
+    { item: "Author", data: selectedArticle.author_username },
     { item: 'Created', data: selectedArticle.created_at },
     { item: 'Updated', data: selectedArticle.updated_at },
   ];

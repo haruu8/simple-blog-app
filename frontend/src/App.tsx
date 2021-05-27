@@ -11,9 +11,17 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PolymerIcon from "@material-ui/icons/Polymer";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  selectLoginUser,
+  selectProfiles,
+  fetchAsyncGetMyProf,
+  fetchAsyncGetProfs,
+  fetchAsyncUpdateProf,
+} from "./components/auth/authSlice";
+import {
   fetchAsyncGetArticles,
   selectEditedArticle,
   fetchAsyncGetCategory,
+  fetchAsyncGetUsers,
 } from "./components/article/articleSlice";
 import ArticleList from './components/article/ArticleList';
 import ArticleForm from './components/article/ArticleForm';
@@ -46,10 +54,30 @@ const App: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const editedArticle = useSelector(selectEditedArticle);
 
+  const loginUser = useSelector(selectLoginUser);
+  const profiles = useSelector(selectProfiles);
+
+  const loginProfile = profiles.filter(
+    (prof) => prof.user_profile === loginUser.id
+  )[0];
+
+  const Logout = () => {
+    localStorage.removeItem('localJWT');
+    window.location.href = '/';
+  };
+
+  const handlerEditPicture = () => {
+    const fileInput = document.getElementById('imageInput');
+    fileInput?.click();
+  };
+
   useEffect(() => {
     const fetchBootLoader = async () => {
       await dispatch(fetchAsyncGetArticles());
       await dispatch(fetchAsyncGetCategory());
+      await dispatch(fetchAsyncGetMyProf());
+      await dispatch(fetchAsyncGetUsers());
+      await dispatch(fetchAsyncGetProfs());
     };
     fetchBootLoader();
   }, [dispatch]);
@@ -66,8 +94,30 @@ const App: React.FC = () => {
           </Grid>
           <Grid item xs={4}>
             <div className={styles.app_logout}>
-              <button>
+              <button className={styles.app__iconLogout} onClick={Logout}>
                 <ExitToAppIcon fontSize='large' />
+              </button>
+              <input
+                type='file'
+                id='imageInput'
+                hidden={true}
+                onChange={(e) => {
+                  dispatch(
+                    fetchAsyncUpdateProf({
+                      id: loginProfile.id,
+                      img: e.target.files !== null ? e.target.files[0] : null,
+                    })
+                  );
+                }}
+              />
+              <button className={styles.app__btn} onClick={handlerEditPicture}>
+                <Avatar
+                  className={classes.avatar}
+                  alt="avatar"
+                  src={
+                    loginProfile?.img !== null ? loginProfile?.img : undefined
+                  }
+                />
               </button>
             </div>
           </Grid>

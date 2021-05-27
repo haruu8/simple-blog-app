@@ -14,7 +14,7 @@ export interface FILE extends Blob {
 export interface PROFILE {
   id: number;
   user_profile: number;
-  img: File | null;
+  img: string | null;
 }
 
 
@@ -64,8 +64,8 @@ export interface READ_ARTICLE {
   status_name: string;
   category: number;
   category_item: string;
-  owner: number;
-  owner_username: string;
+  author: number;
+  author_username: string;
   created_at: string,
   updated_at: string,
 }

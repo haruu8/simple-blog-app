@@ -63,7 +63,7 @@ const Auth: React.FC = () => {
         }}
         label='Password'
         type='password'
-        name='Password'
+        name='password'
         value={credential.password}
         onChange={handleInputChange}
       />

@@ -1,7 +1,23 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import axios from 'axios';
-import { READ_ARTICLE, POST_ARTICLE, ARTICLE_STATE, CATEGORY } from '../types';
+import { READ_ARTICLE, POST_ARTICLE, ARTICLE_STATE, USER, CATEGORY } from '../types';
+
+
+export const fetchAsyncGetUsers = createAsyncThunk(
+  'article/getUsers',
+  async () => {
+    const res = await axios.get<USER[]>(
+      `${ process.env.REACT_APP_API_URL }users/`,
+      {
+        headers: {
+          Authorization: `JWT ${ localStorage.localJWT }`,
+        }
+      }
+    );
+    return res.data;
+  }
+);
 
 
 export const fetchAsyncGetCategory = createAsyncThunk(
@@ -114,8 +130,8 @@ export const initialState: ARTICLE_STATE = {
       status_name: '',
       category: 0,
       category_item: '',
-      owner: 0,
-      owner_username: '',
+      author: 0,
+      author_username: '',
       created_at: '',
       updated_at: '',
     },
@@ -135,8 +151,8 @@ export const initialState: ARTICLE_STATE = {
     status_name: '',
     category: 0,
     category_item: '',
-    owner: 0,
-    owner_username: '',
+    author: 0,
+    author_username: '',
     created_at: '',
     updated_at: '',
   },
