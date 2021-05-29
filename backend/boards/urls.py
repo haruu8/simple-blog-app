@@ -1,11 +1,12 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import ArticleViewSet, CommentViewSet, CategoryViewSet, CreateUserView, ListUserView, LoginUserView
+from .views import ArticleViewSet, CommentViewSet, CategoryViewSet, CreateUserView, ListUserView, LoginUserView, ProfileViewSet
 
 router = routers.DefaultRouter()
 router.register('article', ArticleViewSet)
 router.register('category', CategoryViewSet)
 router.register('comment', CommentViewSet)
+router.register('profile', ProfileViewSet)
 
 app_name = 'boards'
 

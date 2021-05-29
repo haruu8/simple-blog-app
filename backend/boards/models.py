@@ -16,7 +16,10 @@ def upload_avatar_path(instance, filename):
 
 
 class Profile(models.Model):
-    user_profile = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    user_profile = models.OneToOneField(
+        User, related_name='user_profile',
+        on_delete=models.CASCADE
+    )
     img = models.ImageField(blank=True, null=True, upload_to=upload_avatar_path)
 
     def __str__(self):

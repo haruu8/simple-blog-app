@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status, permissions, generics
-from .models import Article, Comment, Category
-from .serializers import ArticleSerializer, CommentSerializer, CategorySerializer, UserSerializer
+from .models import Article, Comment, Category, Profile
+from .serializers import ArticleSerializer, CommentSerializer, CategorySerializer, UserSerializer, ProfileSerializer
 from rest_framework.response import Response
 from .permissions import OwnerPermission
 from django.contrib.auth.models import User
@@ -25,6 +25,22 @@ class LoginUserView(generics.RetrieveUpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         response = {'message': 'PUT method now allowed'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user_profile=self.request.user)
+
+    def destroy(self, request, *args, **kwargs):
+        response = {'message': 'DELETE method is not allowed'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, *args, **kwargs):
+        response = {'message': 'PATCH method is not allowed'}
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 

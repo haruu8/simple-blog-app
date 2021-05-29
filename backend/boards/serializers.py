@@ -15,13 +15,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['id', 'user_profile', 'img']
-        extra_kwargs = {'user_profile': {'read_only': True}}
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
