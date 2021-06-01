@@ -141,12 +141,6 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchAsyncCreateProf.rejected,
-      () => {
-        alert('プロフ作成時にエラー発生');
-      }
-    );
-    builder.addCase(
       fetchAsyncLogin.fulfilled,
       (state, action: PayloadAction<JWT>) => {
         localStorage.setItem('localJWT', action.payload.access);
