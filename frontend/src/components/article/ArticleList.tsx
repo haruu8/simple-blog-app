@@ -171,6 +171,7 @@ const ArticleList: React.FC = () => {
                       </TableCell>
                     )
                 )}
+                {/* ここに Avater */}
                 <TableCell align='center'>
                   <button
                     className={styles.articlelist__icon}

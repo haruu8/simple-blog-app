@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields import related
+from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class Category(models.Model):
@@ -58,3 +65,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body_text
+
+
+class User(AbstractUser):
+    pass
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        Profile.objects.get_or_create(user=kwargs['instance'])

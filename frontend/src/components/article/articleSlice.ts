@@ -27,7 +27,7 @@ export const fetchAsyncGetCategory = createAsyncThunk(
       `${ process.env.REACT_APP_API_URL }category/`,
       {
         headers: {
-          Autorization: `JWT ${localStorage.localJWT}`,
+          Authorization: `JWT ${localStorage.localJWT}`,
         },
       }
     );
